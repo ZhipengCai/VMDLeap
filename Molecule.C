@@ -33,6 +33,7 @@
 #include "VMDApp.h"
 #include "CommandQueue.h"
 #include "CoorData.h"
+#include "HandTracker.h"
 
 ///////////////////////////  constructor  
 
@@ -132,18 +133,24 @@ int Molecule::get_new_frames() {
   // If an IMD simulation is in progress, store the forces in the current
   // timestep and send them to the simulation.  Otherwise, just toss them.
   if (app->imd_connected(id())) {
+    // Clear old forces out of the timestep
+    Timestep *ts = current();
+    if (ts && ts->force) {
+      memset(ts->force, 0, 3*nAtoms*sizeof(float));
+    }
+    float *atompos;
+    float atomforce[3];
+    for (int idx=0; idx<nAtoms*3; idx+=3) {
+        atompos = ts->pos + idx;
+        addPersistentForce(idx/3, atomforce);
+    }
+
     // Add persistent forces to regular forces
     int ii;
     for (ii=0; ii<persistent_force_indices.num(); ii++) 
       force_indices.append(persistent_force_indices[ii]);
     for (ii=0; ii<persistent_force_vectors.num(); ii++) 
       force_vectors.append(persistent_force_vectors[ii]);
-
-    // Clear old forces out of the timestep
-    Timestep *ts = current();
-    if (ts && ts->force) {
-      memset(ts->force, 0, 3*nAtoms*sizeof(float));
-    }
 
     // Check for atoms forced last time that didn't show up this time.
     // XXX order N^2 in number of applied forces; could be easily improved.
