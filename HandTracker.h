@@ -10,7 +10,7 @@ typedef struct {
     HandVis* vis;
 } HandTrackerState;
 
-void calculateaHandForce(float*, float*);
+void calculateHandForce(float*, float*);
 void initializeHandTracker();
 HandTrackerState* getHandTrackerState();
 

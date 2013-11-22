@@ -142,6 +142,7 @@ int Molecule::get_new_frames() {
     float atomforce[3];
     for (int idx=0; idx<nAtoms*3; idx+=3) {
         atompos = ts->pos + idx;
+        calculateHandForce(atompos, atomforce);
         addPersistentForce(idx/3, atomforce);
     }
 
