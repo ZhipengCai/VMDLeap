@@ -228,7 +228,8 @@ VMD_CCPP    =	FltkOpenGLDisplayDevice.C \
 		MainFltkMenu.C \
 		ToolFltkMenu.C \
 		frame_selector.C \
-		HandTracker.C
+		HandTracker.C \
+		HandVis.C
 
 # C source files
 VMD_CC      = 	hash.c \

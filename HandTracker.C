@@ -28,6 +28,8 @@ void initializeHandTracker() {
     st_ht->bone_position = (float*)malloc(sizeof(float)*MAX_BONE_COUNT*6);
 
     st_ht->initialized = true;
+
+    msgInfo << "HandTracker is initialized!" << sendmsg;
 }
 
 HandTrackerState* getHandTrackerState() {

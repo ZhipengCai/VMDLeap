@@ -35,6 +35,7 @@ class AtomSel;
 class VMDApp;
 class MoleculeGraphics;
 class DrawForce;
+class HandVis;
 
 /// A monitor class that acts as a proxy for things like labels that
 /// have to be notified when molecules change their state.  
@@ -64,6 +65,9 @@ private:
 
   /// a DrawForce instance for drawing force arrows
   DrawForce *drawForce;
+
+  /// a HandVis instance for drawing hand skeleton
+  HandVis *handvis;
 
   /// representations
   ResizeArray<DrawMolItem *> repList;

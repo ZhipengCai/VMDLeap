@@ -42,6 +42,7 @@
 #include "DrawForce.h"
 #include "VolumetricData.h"
 #include "CUDAAccel.h"
+#include "HandVis.h"
 
 ///////////////////////  constructor and destructor
 
@@ -55,6 +56,7 @@ DrawMolecule::DrawMolecule(VMDApp *vmdapp, Displayable *par)
   molgraphics = new MoleculeGraphics(this);
   vmdapp->pickList->add_pickable(molgraphics);
   drawForce = new DrawForce(this);
+  handvis = new HandVis(this);
 
   invalidate_cov_scale();
   center[0] = center[1] = center[2] = 0.0f;
@@ -213,6 +215,7 @@ void DrawMolecule::change_ts() {
 
   molgraphics->prepare();
   drawForce->prepare();
+  handvis->prepare();
 
   notify();
 

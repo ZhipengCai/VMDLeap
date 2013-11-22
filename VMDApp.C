@@ -143,6 +143,9 @@
 // default atom selection
 #define DEFAULT_ATOMSEL "all"
 
+// HandTracking
+#include "HandTracker.h"
+
 // XXX static data item
 static unsigned long repserialnum;
 static unsigned long texserialnum;
@@ -439,7 +442,10 @@ int VMDApp::VMDinit(int argc, char **argv, const char *displaytype,
   menu_show("main", 1);
 #endif
 #endif
-  
+ 
+  // HandTrackerの初期化
+  initializeHandTracker();
+
   // successful initialization.  Turn off the exit flag return success
   exitFlag = FALSE;
   return TRUE;
