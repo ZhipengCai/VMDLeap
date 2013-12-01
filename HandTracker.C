@@ -2,7 +2,13 @@
 #include <math.h>
 
 #include "HandTracker.h"
+#include "HandTrackerCommunication.h"
 #include "Inform.h"
+
+#include "pthread.h"
+#include "osc/OscReceivedElements.h"
+#include "osc/OscPacketListener.h"
+#include "ip/UdpSocket.h"
 
 #define MAX_BONE_COUNT 20
 
@@ -31,6 +37,8 @@ void initializeHandTracker() {
     st_ht->bone_position[4] = 1.0f;
     st_ht->bone_position[5] = 1.0f;
 
+    initializeHandTrackerCommunication(st_ht);
+
     st_ht->initialized = true;
 
     msgInfo << "HandTracker is initialized!" << sendmsg;
@@ -39,3 +47,4 @@ void initializeHandTracker() {
 HandTrackerState* getHandTrackerState() {
     return st_ht;
 }
+

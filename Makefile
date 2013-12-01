@@ -229,6 +229,7 @@ VMD_CCPP    =	FltkOpenGLDisplayDevice.C \
 		ToolFltkMenu.C \
 		frame_selector.C \
 		HandTracker.C \
+		HandTrackerCommunication.C \
 		HandVis.C
 
 # C source files
@@ -444,11 +445,11 @@ VMD_MAIN_DIR_FILES = 	Announcement FEEDBACK LICENSE README configure
 # Turn things into objects
 VMD_OBJS    =   $(VMD_CCPP:.C=.o) $(VMD_CC:.c=.o) $(VMD_CU:.cu=.o)
 
-INCDIRS     =  -I/usr/include/CL   -I../lib/tcl/include -I../lib/tk/lib_MACOSXX86_64/Tk.framework/Versions/8.5/Headers -I../plugins/include -I../plugins/MACOSXX86_64/molfile -I../lib/fltk/fltk-1.3.x -I. -I/opt/X11/include
+INCDIRS     =  -I/usr/include/CL   -I../lib/tcl/include -I../lib/tk/lib_MACOSXX86_64/Tk.framework/Versions/8.5/Headers -I../plugins/include -I../plugins/MACOSXX86_64/molfile -I../lib/fltk/fltk-1.3.x -I. -I/opt/X11/include -I../lib/osc
 
-LIBS        = -lfltk_gl -framework OpenGL -framework AGL -framework OpenCL  -lpthread -framework Tk -framework Tcl  -lmolfile_plugin -lfltk  -framework Cocoa  $(VMDEXTRALIBS)
+LIBS        = -lfltk_gl -framework OpenGL -framework AGL -framework OpenCL  -lpthread -framework Tk -framework Tcl  -lmolfile_plugin -lfltk  -framework Cocoa -loscpack  $(VMDEXTRALIBS)
 
-LIBDIRS     =     -F../lib/tcl/lib_MACOSXX86_64 -F../lib/tk/lib_MACOSXX86_64 -Wl,-executable_path . -lmx  -L../plugins/MACOSXX86_64/molfile -L../lib/fltk/MACOSXX86_64 
+LIBDIRS     =     -F../lib/tcl/lib_MACOSXX86_64 -F../lib/tk/lib_MACOSXX86_64 -Wl,-executable_path . -lmx  -L../plugins/MACOSXX86_64/molfile -L../lib/fltk/MACOSXX86_64 -L../lib/osc
 
 DEFINES     = -DVMDOPENGL -DVMDFLTKOPENGL -DVMDOPENCL -DVMDIMD -DVMDTHREADS -DWKFTHREADS -DUSEPOSIXTHREADS -D_REENTRANT -DVMDQUICKSURF -DVMDWITHCARBS -DVMDPOLYHEDRA -DVMDSURF -DVMDMSMS -DVMDPBCSMOOTH -DVMDTCL -DVMDTK  -DVMDSTATICPLUGINS -DVMDGUI -DVMDFLTK 
 

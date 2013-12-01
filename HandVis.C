@@ -21,10 +21,13 @@ void HandVis::create_cmdlist(void) {
         needRegenerate = FALSE;
         reset_disp_list();
 
+        // debug
         DispCmdColorIndex cmdColorIndex;
-        DispCmdLine cmdLine;
-
         cmdColorIndex.putdata(MAPCOLOR(0), cmdList);
+
+        DispCmdLine cmdLine;
+        DispCmdLineWidth cmdLineWidth;
+        cmdLineWidth.putdata(10, cmdList);
 
         // draw each bones
         HandTrackerState* st_ht = getHandTrackerState();
@@ -38,6 +41,7 @@ void HandVis::create_cmdlist(void) {
                 }
 
                 cmdLine.putdata(pos1, pos2, cmdList);
+
                 msgInfo << "show Bone" << sendmsg;
             }
         }
