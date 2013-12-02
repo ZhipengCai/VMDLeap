@@ -138,12 +138,17 @@ int Molecule::get_new_frames() {
     if (ts && ts->force) {
       memset(ts->force, 0, 3*nAtoms*sizeof(float));
     }
+
     float *atompos;
-    float atomforce[3];
-    for (int idx=0; idx<nAtoms*3; idx+=3) {
-        atompos = ts->pos + idx;
-        calculateHandForce(atompos, atomforce);
-        addPersistentForce(idx/3, atomforce);
+    float atomforce[3*nAtoms];
+    float *rads = radius();
+    for (int idx=0; idx<nAtoms; idx++) {
+        atompos = ts->pos + idx*3;
+        calculateHandForce(atompos, rads[idx], atomforce + idx*3);
+    }
+    normalizeHandForce(atomforce, nAtoms);
+    for (int idx=0; idx<nAtoms; idx++) {
+        addPersistentForce(idx, atomforce + idx*3);
     }
 
     // Add persistent forces to regular forces

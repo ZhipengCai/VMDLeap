@@ -4,9 +4,10 @@
 #include "HandVis.h"
 #include "pthread.h"
 
-#define POINT_RADIUS 0.03
+#define POINT_RADIUS 0.06
 #define LEAP_VERTICAL_OFFSET 250
 #define LEAP_SCALE_FACTOR 0.005
+#define HAND_FORCE_CONSTANT 0.05
 
 typedef struct {
     bool initialized;
@@ -19,7 +20,9 @@ typedef struct {
     int exit;
 } HandTrackerState;
 
-void calculateHandForce(float*, float*);
+void calculateHandForce(float*, float, float*);
+void normalizeHandForce(float*, int);
+
 void initializeHandTracker();
 HandTrackerState* getHandTrackerState();
 
