@@ -4,6 +4,10 @@
 #include "HandVis.h"
 #include "pthread.h"
 
+#define POINT_RADIUS 0.03
+#define LEAP_VERTICAL_OFFSET 250
+#define LEAP_SCALE_FACTOR 0.008
+
 typedef struct {
     bool initialized;
     int bone_count;

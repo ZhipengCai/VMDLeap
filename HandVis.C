@@ -21,13 +21,17 @@ void HandVis::create_cmdlist(void) {
         needRegenerate = FALSE;
         reset_disp_list();
 
-        // debug
+        // 表示方法はLicoriceをまねする
+        // sphereArray + cylinder
+        DispCmdSphereRes cmdSphereRes;
+        DispCmdSphereType cmdSphereType;
         DispCmdColorIndex cmdColorIndex;
+        cmdSphereRes.putdata(HAND_SPHERERES, cmdList);
+        cmdSphereType.putdata(SOLIDSPHERE, cmdList);
         cmdColorIndex.putdata(MAPCOLOR(0), cmdList);
 
-        DispCmdLine cmdLine;
-        DispCmdLineWidth cmdLineWidth;
-        cmdLineWidth.putdata(10, cmdList);
+        DispCmdCylinder cmdCylinder;
+        DispCmdSphereArray cmdSphereArray;
 
         // draw each bones
         HandTrackerState* st_ht = getHandTrackerState();
@@ -39,10 +43,9 @@ void HandVis::create_cmdlist(void) {
                     pos1[j] = st_ht->bone_position[i*6+j];
                     pos2[j] = st_ht->bone_position[i*6+3+j];
                 }
+                float r = POINT_RADIUS/scale*HANDVIS_SCALE_FACTOR;
 
-                cmdLine.putdata(pos1, pos2, cmdList);
-
-                msgInfo << "show Bone" << sendmsg;
+                cmdCylinder.putdata(pos1, pos2, r, 8, 0, cmdList);
             }
         }
     }

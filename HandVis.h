@@ -3,7 +3,11 @@
 
 #include "DrawMolecule.h"
 #include "Displayable.h"
-class DisplayDevice;
+#include "DisplayDevice.h"
+
+#define HAND_SPHERERES 6
+// シミュレーション上の指の太さに対しての表示倍率
+#define HANDVIS_SCALE_FACTOR 1.0
 
 class HandVis : public Displayable {
 private:
