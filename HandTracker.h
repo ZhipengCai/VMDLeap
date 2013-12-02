@@ -7,7 +7,7 @@
 #define POINT_RADIUS 0.06
 #define LEAP_VERTICAL_OFFSET 250
 #define LEAP_SCALE_FACTOR 0.005
-#define HAND_FORCE_CONSTANT 0.05
+#define HAND_FORCE_CONSTANT 0.1
 
 typedef struct {
     bool initialized;

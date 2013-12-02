@@ -56,7 +56,8 @@ void calculateHandForce(float *atompos, float vdwrad, float *forcebuf) {
         forcebuf[i] = 0;
     }
 
-    // 各指との間で力を計算して和をとる
+    // 各指との間で力を計算して平均をとる
+    int force_count = 0;
     pthread_mutex_lock(&(st_ht->hand_mutex));
     for (int i=0; i<st_ht->bone_count; i++) {
         float *pos1 = st_ht->bone_position + 6*i;
@@ -90,10 +91,17 @@ void calculateHandForce(float *atompos, float vdwrad, float *forcebuf) {
             }
             for (int j=0; j<3; j++) {
                 float f = dir[j]/st_ht->vis->scale;
+                float mag = l/pow(actual_radius+vdwrad, 2.0); // 距離の自乗に反比例して反発力をかける
+                mag = fmin(mag, 10); // 最大倍率は10
+                f /= (l/vdwrad); // 距離が近いほど力も強く働く
                 f *= HAND_FORCE_CONSTANT;
                 forcebuf[j] += f;
             }
+            force_count++;
         }
+    }
+    if (force_count > 0) {
+        for (int i=0; i<3; i++) forcebuf[i] /= force_count;
     }
     pthread_mutex_unlock(&(st_ht->hand_mutex));
 }
