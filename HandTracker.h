@@ -6,7 +6,7 @@
 
 #define POINT_RADIUS 0.03
 #define LEAP_VERTICAL_OFFSET 250
-#define LEAP_SCALE_FACTOR 0.008
+#define LEAP_SCALE_FACTOR 0.005
 
 typedef struct {
     bool initialized;
@@ -16,6 +16,7 @@ typedef struct {
     // 通信関連
     pthread_t thread;
     pthread_mutex_t hand_mutex;
+    int exit;
 } HandTrackerState;
 
 void calculateHandForce(float*, float*);

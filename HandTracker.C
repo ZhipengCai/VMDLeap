@@ -40,6 +40,7 @@ void initializeHandTracker() {
     initializeHandTrackerCommunication(st_ht);
 
     st_ht->vis = NULL;
+    st_ht->exit = 0;
     st_ht->initialized = true;
 
     msgInfo << "HandTracker is initialized!" << sendmsg;

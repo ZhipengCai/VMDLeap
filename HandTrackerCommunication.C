@@ -11,8 +11,8 @@ void transformHandPositions(float*, int);
 
 void HandPacketListener::ProcessMessage( const osc::ReceivedMessage& m,
         const IpEndpointName& remoteEndpoint ) {
+    HandTrackerState* st_ht = getHandTrackerState();
     try {
-        HandTrackerState* st_ht = getHandTrackerState();
         osc::ReceivedMessageArgumentStream args = m.ArgumentStream();
         int i, count;
         args >> count;
@@ -35,10 +35,13 @@ void HandPacketListener::ProcessMessage( const osc::ReceivedMessage& m,
         }
 
         pthread_mutex_unlock(&(st_ht->hand_mutex));
-
     } catch ( osc::Exception& e ) {
         msgInfo << "error while parsing message: "
             << m.AddressPattern() << ": " << e.what() << sendmsg;
+    }
+    // 終了チェック
+    if (st_ht->exit) {
+        pthread_exit(NULL);
     }
     return;
 }
@@ -66,12 +69,12 @@ void transformHandPositions(float* positions, int count) {
     if (st_ht == NULL || st_ht->vis == NULL) return;
     Matrix4 M(st_ht->vis->rotm);
 
-    msgInfo << st_ht->vis->scale << sendmsg;
+//    msgInfo << st_ht->vis->scale << sendmsg;
 
     for (int i=0; i<count; i++) {
         // y座標の補正。25cm上空を中心と考える
-        positions[1] -= LEAP_VERTICAL_OFFSET;
-        positions[4] -= LEAP_VERTICAL_OFFSET;
+        positions[i*6+1] -= LEAP_VERTICAL_OFFSET;
+        positions[i*6+4] -= LEAP_VERTICAL_OFFSET;
 
         // mm単位で来るので、だいたい1/25するとちょうど良い範囲におさまる
         for (int j=i*6; j<(i+1)*6; j++) {

@@ -31,7 +31,7 @@ void HandVis::create_cmdlist(void) {
         cmdColorIndex.putdata(MAPCOLOR(0), cmdList);
 
         DispCmdCylinder cmdCylinder;
-        DispCmdSphereArray cmdSphereArray;
+        DispCmdSphere cmdSphere;
 
         // draw each bones
         HandTrackerState* st_ht = getHandTrackerState();
@@ -46,6 +46,8 @@ void HandVis::create_cmdlist(void) {
                 float r = POINT_RADIUS/scale*HANDVIS_SCALE_FACTOR;
 
                 cmdCylinder.putdata(pos1, pos2, r, 8, 0, cmdList);
+                cmdSphere.putdata(pos1, r*1.2, cmdList);
+                cmdSphere.putdata(pos2, r*1.2, cmdList);
             }
         }
     }

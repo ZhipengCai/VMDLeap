@@ -626,6 +626,9 @@ int VMDApp::VMDupdate(int check_for_events) {
 
 // exit the program normally; first delete all the necessary objects
 void VMDApp::VMDexit(const char *exitmsg, int exitcode, int pauseseconds) {
+  // oscスレッドを閉じる
+  getHandTrackerState()->exit = 1;
+  pthread_join(getHandTrackerState()->thread, NULL);
 
 #if defined(VMDTKCON)
   // switch to text mode and flush all pending messages to the screen.
